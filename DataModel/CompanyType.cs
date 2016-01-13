@@ -14,11 +14,18 @@ namespace DataModel
     
     public partial class CompanyType
     {
+        public CompanyType()
+        {
+            this.Companies = new HashSet<Company>();
+        }
+    
         public int ID { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> CreatedByUserId { get; set; }
         public Nullable<int> UpdatedByUserId { get; set; }
+    
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

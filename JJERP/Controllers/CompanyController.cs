@@ -40,11 +40,11 @@ namespace JJERP.Controllers
         [HttpPost]
         public ActionResult Create(JJERP.Models.Company company)
         {
-            UnitOfWork<Company1> unitOfWork = new UnitOfWork<Company1>();
+            UnitOfWork<Company> unitOfWork = new UnitOfWork<Company>();
             
             try
             {
-                var companyEntity = new Company1();
+                var companyEntity = new Company();
                 if (company != null)
                 {
                     //companyEntity.ID = company.ID;

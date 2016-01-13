@@ -7,13 +7,6 @@
     <Schema Namespace="jjerpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Company">
           <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Company1">
-          <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -115,6 +108,18 @@
           <Property Name="CreatedByUserId" Type="int" />
           <Property Name="UpdatedByUserId" Type="int" />
         </EntityType>
+        <Association Name="FK_Company1_CompanyType">
+          <End Role="CompanyType" Type="Self.CompanyType" Multiplicity="0..1" />
+          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="CompanyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ContactPerson_Country">
           <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
           <End Role="ContactPerson" Type="Self.ContactPerson" Multiplicity="*" />
@@ -165,12 +170,15 @@
         </Association>
         <EntityContainer Name="jjerpModelStoreContainer">
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Company1" EntityType="Self.Company1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyType" EntityType="Self.CompanyType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactPerson" EntityType="Self.ContactPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorType" EntityType="Self.VendorType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Company1_CompanyType" Association="Self.FK_Company1_CompanyType">
+            <End Role="CompanyType" EntitySet="CompanyType" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
           <AssociationSet Name="FK_ContactPerson_Country" Association="Self.FK_ContactPerson_Country">
             <End Role="Country" EntitySet="Country" />
             <End Role="ContactPerson" EntitySet="ContactPerson" />
@@ -202,6 +210,7 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedByUserId" Type="Int32" />
           <Property Name="UpdatedByUserId" Type="Int32" />
+          <NavigationProperty Name="Companies" Relationship="jjerpModel.FK_Company1_CompanyType" FromRole="CompanyType" ToRole="Company" />
         </EntityType>
         <EntityType Name="ContactPerson">
           <Key>
@@ -351,16 +360,12 @@
             <End Role="Vendor" EntitySet="Vendors" />
           </AssociationSet>
           <EntitySet Name="Companies" EntityType="jjerpModel.Company" />
-          <EntitySet Name="Company1" EntityType="jjerpModel.Company1" />
+          <AssociationSet Name="FK_Company1_CompanyType" Association="jjerpModel.FK_Company1_CompanyType">
+            <End Role="CompanyType" EntitySet="CompanyTypes" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Company1">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -382,7 +387,20 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedByUserId" Type="Int32" />
           <Property Name="UpdatedByUserId" Type="Int32" />
+          <NavigationProperty Name="CompanyType" Relationship="jjerpModel.FK_Company1_CompanyType" FromRole="Company" ToRole="CompanyType" />
         </EntityType>
+        <Association Name="FK_Company1_CompanyType">
+          <End Type="jjerpModel.CompanyType" Role="CompanyType" Multiplicity="0..1" />
+          <End Type="jjerpModel.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="CompanyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -477,14 +495,6 @@
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="jjerpModel.Company">
               <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Company1">
-            <EntityTypeMapping TypeName="jjerpModel.Company1">
-              <MappingFragment StoreEntitySet="Company1">
                 <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />

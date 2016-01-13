@@ -14,7 +14,25 @@ namespace DataModel
     
     public partial class Company
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
+        public Nullable<int> CompanyTypeID { get; set; }
+        public string Street { get; set; }
+        public string HouseNumber { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public Nullable<int> CountryID { get; set; }
+        public string LandMark { get; set; }
+        public string Description { get; set; }
+        public string Telephone { get; set; }
+        public string Email { get; set; }
+        public string Website { get; set; }
+        public Nullable<int> PaymentTermDays { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public Nullable<int> CreatedByUserId { get; set; }
+        public Nullable<int> UpdatedByUserId { get; set; }
+    
+        public virtual CompanyType CompanyType { get; set; }
     }
 }

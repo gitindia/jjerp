@@ -52,9 +52,6 @@
     <Compile Include="Company.cs">
       <DependentUpon>JJERPDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Company1.cs">
-      <DependentUpon>JJERPDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="CompanyType.cs">
       <DependentUpon>JJERPDataModel.tt</DependentUpon>
     </Compile>

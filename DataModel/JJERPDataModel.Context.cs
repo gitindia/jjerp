@@ -31,6 +31,5 @@ namespace DataModel
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorType> VendorTypes { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
-        public virtual DbSet<Company1> Company1 { get; set; }
     }
 }
